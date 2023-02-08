@@ -20,8 +20,8 @@ public class Partida {
         this.dealer = definirDealer();
     }
 
-    public void setPot(int pot) {
-        this.pot = pot;
+    public void receberAposta(int pot) {
+        this.pot += pot;
     }
 
     public ArrayList<Jogador> getJogadoresPartida() {

@@ -32,7 +32,8 @@ public class Mesa{
         jogadoresNaMesa.put(jogador, posicao);
     }
 
-    public void levantarDaMesa (Jogador jogador, Integer posicao){
+    public void levantarDaMesa (Jogador jogador){
+        int posicao = posicaoJogadorMesa(jogador);
         lugares[posicao] = false;
         jogadoresNaMesa.remove(jogador);
     }
@@ -56,5 +57,9 @@ public class Mesa{
 
     public boolean[] getLugares() {
         return lugares;
+    }
+
+    public int posicaoJogadorMesa(Jogador jogador){
+        return jogadoresNaMesa.get(jogador);
     }
 }

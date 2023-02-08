@@ -15,14 +15,14 @@ public class JogadorServiceImpl implements JogadorService {
     @Override
     public void apostar(int valor) {
         jogador.apostar(valor);
-        partida.setPot(partida.getPot() + valor);
+        partida.receberAposta(valor);
     }
 
     @Override
     public void cobrir() {
         int valor = partida.getApostaCorrente();
         jogador.apostar(valor);
-        partida.setPot(partida.getPot()+ valor);
+        partida.receberAposta(valor);
     }
 
     @Override
