@@ -1,13 +1,9 @@
 package org.example.entidade;
 
-import org.example.interfaces.JogadorService;
 import org.example.interfaces.PartidaService;
 
-import java.util.List;
-import java.util.Random;
-
 import static org.example.entidade.Jogador.QUANTIDADECARTASJOGADOR;
-import static org.example.entidade.Mao.QUANTIDADECARTASMESA;
+import static org.example.entidade.Partida.QUANTIDADECARTASCOMUNITARIAS;
 
 
 public class PartidaServiceImpl implements PartidaService {
@@ -18,18 +14,13 @@ public class PartidaServiceImpl implements PartidaService {
 
     private int CARTARIVER = 5;
 
-    private Mao mao;
-    private Mesa mesa;
+    private Partida partida;
     private Baralho baralho;
-    JogadorService jogadas;
 
 
-
-    public PartidaServiceImpl(Mao mao, Mesa mesa, Baralho baralho) {
-        this.mao = mao;
-        this.mesa = mesa;
+    public PartidaServiceImpl(Partida partida, Baralho baralho) {
+        this.partida = partida;
         this.baralho = baralho;
-        this.jogadas = jogadas;
     }
 
     @Override
@@ -39,23 +30,25 @@ public class PartidaServiceImpl implements PartidaService {
 
     @Override
     public void darCartasJogadores() {
-        for (Jogador jogador: mao.getJogadoresMao()) {
-            for (int i= 0; i<QUANTIDADECARTASJOGADOR; i++){
+        for (Jogador jogador: partida.getJogadoresPartida()) {
+            Carta[] cartasJogador = new Carta[QUANTIDADECARTASJOGADOR];
+            for (int i= 0; i< cartasJogador.length; i++){
                 Carta carta = baralho.darCarta();
-                jogador.setCartasJogador(carta, i);
+                cartasJogador[i]= carta;
             }
+            jogador.receberCartas(cartasJogador);
         }
 
     }
 
     @Override
     public void darCartasMesa() {
-        Carta[] cartasDaMao = new Carta[QUANTIDADECARTASMESA];
-        for(int i=0; i<cartasDaMao.length; i++){
+        Carta[] cartasComunitarias = new Carta[QUANTIDADECARTASCOMUNITARIAS];
+        for(int i=0; i< cartasComunitarias.length; i++){
             Carta carta = baralho.darCarta();
-            cartasDaMao[i]= carta;
+            cartasComunitarias[i]= carta;
         }
-        mao.setCartaMesa(cartasDaMao);
+        partida.receberCartasPartida(cartasComunitarias);
     }
 
     @Override
@@ -67,19 +60,19 @@ public class PartidaServiceImpl implements PartidaService {
     @Override
     public void virarCartasFlop() {
         for(int i=0; i<QUANTIDADECARTASFLOP; i++){
-            System.out.println(mao.getCartaMesa(i).getCartaComNaipe());
+            System.out.println(partida.getCartaMesa(i).getCartaComNaipe());
         }
     }
 
     @Override
     public void virarCartasTurn() {
 
-        System.out.println(mao.getCartaMesa(CARTATURN).getCartaComNaipe());
+        System.out.println(partida.getCartaMesa(CARTATURN).getCartaComNaipe());
     }
 
     @Override
     public void virarCartasRives() {
-        System.out.println(mao.getCartaMesa(CARTARIVER).getCartaComNaipe());
+        System.out.println(partida.getCartaMesa(CARTARIVER).getCartaComNaipe());
 
     }
 

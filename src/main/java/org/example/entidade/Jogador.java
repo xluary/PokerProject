@@ -12,7 +12,6 @@ public class Jogador {
 
     private Carta [] cartasJogador = new Carta[QUANTIDADECARTASJOGADOR];
 
-
     public Jogador(String nome) {
         this.jogando = true;
 
@@ -53,10 +52,9 @@ public class Jogador {
         return cartasJogador[posicao];
     }
 
-    public void setCartasJogador(Carta carta, int posicao){
-        this.cartasJogador[posicao] = carta;
+    public void receberCartas(Carta[] cartas){
+        this.cartasJogador = cartas;
     }
-
 
 
 }

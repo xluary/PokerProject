@@ -4,29 +4,29 @@ import org.example.interfaces.JogadorService;
 
 public class JogadorServiceImpl implements JogadorService {
 
-    private Mao mao;
+    private Partida partida;
     private Jogador jogador;
 
-    public JogadorServiceImpl(Mao mao, Jogador jogador) {
-        this.mao = mao;
+    public JogadorServiceImpl(Partida partida, Jogador jogador) {
+        this.partida = partida;
         this.jogador = jogador;
     }
 
     @Override
     public void apostar(int valor) {
         jogador.apostar(valor);
-        mao.setPot(mao.getPot() + valor);
+        partida.setPot(partida.getPot() + valor);
     }
 
     @Override
     public void cobrir() {
-        int valor = mao.getApostaCorrente();
+        int valor = partida.getApostaCorrente();
         jogador.apostar(valor);
-        mao.setPot(mao.getPot()+ valor);
+        partida.setPot(partida.getPot()+ valor);
     }
 
     @Override
     public void correr() {
-        mao.removerJogadorDaMao(jogador);
+        partida.removerJogadorDaPartida(jogador);
     }
 }

@@ -1,6 +1,5 @@
 package org.example.entidade;
 
-import org.assertj.core.data.MapEntry;
 import org.example.excessoes.LugarOcupadoExpection;
 import org.example.interfaces.JogadorService;
 import org.example.interfaces.PartidaService;
@@ -17,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PartidaServiceImplTest {
 
-    Mao mao;
+    Partida partida;
     Mesa mesa;
     Baralho baralho;
-    PartidaService partida;
+    PartidaService partidaService;
 
     JogadorService jogadas;
     MesaServiceImpl mesaService;
@@ -43,9 +42,9 @@ public class PartidaServiceImplTest {
 
         mesa = new Mesa();
         mesaService = new MesaServiceImpl(mesa);
-        mao = new Mao(mesa, listJogadores);
+        partida = new Partida(listJogadores);
         baralho = new Baralho();
-        partida = new PartidaServiceImpl(mao, mesa, baralho);
+        partidaService = new PartidaServiceImpl(partida, baralho);
     }
 
 
