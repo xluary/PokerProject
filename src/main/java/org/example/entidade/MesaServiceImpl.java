@@ -3,6 +3,8 @@ package org.example.entidade;
 import org.example.excessoes.LugarOcupadoExpection;
 import org.example.interfaces.MesaService;
 
+import java.util.Map;
+
 public class MesaServiceImpl implements MesaService {
     Mesa mesa;
 
@@ -18,10 +20,19 @@ public class MesaServiceImpl implements MesaService {
     public void levantarMesa(Jogador jogador){
        mesa.levantarDaMesa(jogador);
     }
+
     private void conferirLugarOcupado(Integer posicao) throws LugarOcupadoExpection {
         boolean[] lugares = mesa.getLugares();
         if(lugares[posicao] == true){
             throw new LugarOcupadoExpection("Este lugar já está ocupado");
         }
+    }
+
+    public int quantidadeJogadoresNaMesa(){
+        return mesa.getJogadoresNaMesa().size();
+    }
+
+    public Map<Jogador,Integer> getJogadoresNaMesa(){
+        return mesa.getJogadoresNaMesa();
     }
 }

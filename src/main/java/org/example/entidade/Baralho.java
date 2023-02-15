@@ -1,7 +1,5 @@
 package org.example.entidade;
 
-import org.example.interfaces.JogadorService;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

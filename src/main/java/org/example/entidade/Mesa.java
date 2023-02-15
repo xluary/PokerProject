@@ -3,7 +3,6 @@ package org.example.entidade;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class Mesa{
@@ -46,7 +45,7 @@ public class Mesa{
         return getJogadoresNaMesaOrdenado();
     }
 
-    public Map<Jogador, Integer> getJogadoresNaMesaOrdenado(){
+    private Map<Jogador, Integer> getJogadoresNaMesaOrdenado(){
         Map<Jogador, Integer> jogadoresOrdenados = jogadoresNaMesa.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
@@ -61,5 +60,10 @@ public class Mesa{
 
     public int posicaoJogadorMesa(Jogador jogador){
         return jogadoresNaMesa.get(jogador);
-    }
+    };
+
+    public int quantidadeDePessoasNaMesa(){
+        return jogadoresNaMesa.size();
+    };
+
 }

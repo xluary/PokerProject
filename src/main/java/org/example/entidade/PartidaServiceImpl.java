@@ -1,6 +1,9 @@
 package org.example.entidade;
 
+import org.example.interfaces.MesaService;
 import org.example.interfaces.PartidaService;
+
+import java.util.Map;
 
 import static org.example.entidade.Jogador.QUANTIDADECARTASJOGADOR;
 import static org.example.entidade.Partida.QUANTIDADECARTASCOMUNITARIAS;
@@ -17,8 +20,11 @@ public class PartidaServiceImpl implements PartidaService {
     private Partida partida;
     private Baralho baralho;
 
+    private MesaService mesa;
 
-    public PartidaServiceImpl(Partida partida, Baralho baralho) {
+
+    public PartidaServiceImpl(Partida partida, Baralho baralho, MesaService mesa) {
+        this.mesa = mesa;
         this.partida = partida;
         this.baralho = baralho;
     }
@@ -30,7 +36,8 @@ public class PartidaServiceImpl implements PartidaService {
 
     @Override
     public void darCartasJogadores() {
-        for (Jogador jogador: partida.getJogadoresPartida()) {
+        for (Map.Entry<Jogador, Integer> jogadoresPosicao: partida.getJogadoresNaPartida().entrySet()) {
+            Jogador jogador = jogadoresPosicao.getKey();
             Carta[] cartasJogador = new Carta[QUANTIDADECARTASJOGADOR];
             for (int i= 0; i< cartasJogador.length; i++){
                 Carta carta = baralho.darCarta();
@@ -52,16 +59,19 @@ public class PartidaServiceImpl implements PartidaService {
     }
 
     @Override
-    public void definirJogadorDaVez() {
+    public void definirJogadorDaVez(int posicaoUltimoJogador) {
+
 
 
     }
 
     @Override
-    public void virarCartasFlop() {
+    public Carta[] virarCartasFlop() {
+        Carta[] cartasFlop = new Carta[QUANTIDADECARTASFLOP];
         for(int i=0; i<QUANTIDADECARTASFLOP; i++){
-            System.out.println(partida.getCartaMesa(i).getCartaComNaipe());
+            cartasFlop[i]= partida.getCartaMesa(i);
         }
+        return cartasFlop;
     }
 
     @Override

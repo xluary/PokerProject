@@ -13,7 +13,6 @@ public class Jogador {
     private Carta [] cartasJogador = new Carta[QUANTIDADECARTASJOGADOR];
 
     public Jogador(String nome) {
-        this.jogando = true;
 
         this.nome = nome;
 
@@ -32,16 +31,8 @@ public class Jogador {
         return nome;
     }
 
-    public boolean isJogando() {
-        return jogando;
-    }
-
     public int getMontanteFichas() {
         return montanteFichas;
-    }
-
-    public void setJogando(boolean jogando) {
-        this.jogando = jogando;
     }
 
     public Carta[] getCartasJogador() {
@@ -56,5 +47,7 @@ public class Jogador {
         this.cartasJogador = cartas;
     }
 
-
+    public boolean isJogando() {
+        return jogando;
+    }
 }

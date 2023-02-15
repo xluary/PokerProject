@@ -1,36 +1,45 @@
 package org.example.entidade;
 
+import org.example.interfaces.MesaService;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Partida {
 
     public static final int QUANTIDADECARTASCOMUNITARIAS = 5;
-    private ArrayList<Jogador> jogadoresPartida;
+    private Map<Jogador, Integer> jogadoresPartida;
     private int pot;
     private Carta[] cartasComunitarias = new Carta[QUANTIDADECARTASCOMUNITARIAS];
     private int apostaCorrente;
     private Jogador dealer;
 
-    public Partida(ArrayList<Jogador> jogadoresMao) {
-        this.jogadoresPartida = jogadoresMao;
+    private MesaService mesa;
+
+    public Partida(MesaService mesaService) {
+        this.mesa = mesaService;
         this.pot = 0;
         this.apostaCorrente = 0;
         this.dealer = definirDealer();
+    }
+
+    public Map<Jogador, Integer> getJogadoresNaPartida(){
+      Map<Jogador, Integer> jogadoresJogando= mesa.getJogadoresNaMesa();
+      for(Map.Entry<Jogador, Integer> entry: mesa.getJogadoresNaMesa().entrySet()){
+          if(entry.getKey().isJogando()){
+              jogadoresJogando.put(entry.getKey(), entry.getValue());
+          }
+
+      }
+        this.jogadoresPartida = jogadoresJogando;
+        return jogadoresJogando;
     }
 
     public void receberAposta(int pot) {
         this.pot += pot;
     }
 
-    public ArrayList<Jogador> getJogadoresPartida() {
-        return jogadoresPartida;
-    }
-
-    public int getPot() {
-        return pot;
-    }
 
     public int getApostaCorrente() {
         return apostaCorrente;
@@ -49,16 +58,32 @@ public class Partida {
     }
 
     public Jogador definirDealer(){
-        return getRandomPlayer(jogadoresPartida);
+        Map<Jogador, Integer> jogadoresNaPartida = getJogadoresNaPartida();
+        return getRandomPlayer(jogadoresNaPartida);
     }
 
-    public Jogador getRandomPlayer(List<Jogador> playes){
+    public Jogador getRandomPlayer(Map<Jogador, Integer> playes){
+        ArrayList <Integer> listaDeAssentosOcupados = new ArrayList<>();
+        Jogador jogador = null;
+        for(Map.Entry<Jogador, Integer> entry : playes.entrySet()){
+            listaDeAssentosOcupados.add(entry.getValue());
+        }
         Random rand = new Random();
-        return playes.get(rand.nextInt(playes.size()));
+        int posicaoAssentoOcupadoEscolhido = rand.nextInt(listaDeAssentosOcupados.size());
+        int assento = listaDeAssentosOcupados.get(posicaoAssentoOcupadoEscolhido);
+        for(Map.Entry<Jogador, Integer> entry : playes.entrySet()){
+            if(entry.getValue().equals(assento)){
+                jogador = entry.getKey();
+            }
+        }
+        return jogador;
     }
 
     public void receberCartasPartida(Carta[] cartas){
         this.cartasComunitarias = cartas;
     }
 
+    public Carta[] getCartasComunitarias() {
+        return cartasComunitarias;
+    }
 }
